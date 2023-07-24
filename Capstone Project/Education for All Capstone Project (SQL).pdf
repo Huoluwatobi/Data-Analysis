@@ -1,0 +1,56 @@
+select *
+from donation_data;
+
+select *
+from donor_data;
+
+--1. How much is the total donation?
+Select round(sum(donation),2) Total_donation
+from donation_data;
+
+--2. What is the total doantion by gender?
+Select gender, round(sum(donation),2) Total_donation
+from donation_data
+group by 1;
+
+--3. Show the total donation and number of donations by gender
+Select gender,round(sum(donation),2) Total_donation, count(donation) number_of_donations
+from donation_data
+group by 1;
+
+--4. Total donations made by frequency of donation
+Select id donor_ID, donations, donation_frequency
+from donation_data
+left join donor_data
+on id;
+
+--5. Total donation and number of donation by job field
+Select job_field,round(sum(donation),2) Total_donation, count(donation) number_of_donations
+from donation_data
+group by 1;
+
+--6. Total donation and number of donations above $200
+Select round(sum(donation),2) Total_donation_above_$200, count(donation) number_of_donations
+from donation_data
+where donation > 200;
+
+--7. Total donation and number of donations below $200
+Select round(sum(donation),2) Total_donation_below_$200, count(donation) number_of_donations
+from donation_data
+where donation < 200;
+
+--8. Which top 10 states contributes the highest donations?
+Select state, round(sum(donation),2) Total_donation
+from donation_data
+group by 1
+order by 2 desc
+limit 10;
+
+--9. Top 10 states contributes the least donations
+Select state state_with_least_donations, round(sum(donation),2) Total_donation
+from donation_data
+group by 1
+order by 2
+limit 10;
+
+--10. Top 10 cars driven by the highest donors
